@@ -1,0 +1,26 @@
+services:
+  sentinel-api:
+    build: .
+    container_name: omniedge-sentinel-api
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  sentinel-dashboard:
+    build: .
+    container_name: omniedge-sentinel-dashboard
+    restart: always
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["streamlit", "run", "src/dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

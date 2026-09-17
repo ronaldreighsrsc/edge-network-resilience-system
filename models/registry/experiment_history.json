@@ -1,0 +1,19 @@
+[
+  {
+    "run_id": "run_1789603731",
+    "timestamp": "2026-09-16T21:08:51.391018",
+    "experiment_name": "azapa_valley_72h_baseline",
+    "model_version": "v1.0.0-azapa",
+    "params": {
+      "n_estimators": 100,
+      "contamination": 0.05,
+      "total_samples": 8640
+    },
+    "metrics": {
+      "mean_rssi": -53.63190841674805,
+      "mean_loss": 1.832041621208191
+    },
+    "artifact_path": "models/anomaly_detector.joblib",
+    "notes": "Trained on 8,640 physical observations from Valle de Azapa field trial."
+  }
+]

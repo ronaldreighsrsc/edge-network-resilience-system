@@ -1,0 +1,49 @@
+system:
+  name: "OmniEdge Sentinel"
+  version: "1.0.0"
+  environment: "edge"
+  log_level: "INFO"
+
+storage:
+  database_path: "data/telemetry.db"
+  journal_mode: "WAL"
+  synchronous: "NORMAL"
+  retention_days: 30
+
+engine:
+  sampling_interval_sec: 15
+  mcda:
+    deadband_percentage: 0.15          # 15% indifference zone
+    hysteresis_cycles: 3               # Must beat current AP for 3 consecutive cycles
+    warmup_duration_sec: 4.0           # Post-handover ARP populate & stabilization
+    weights:
+      rssi: 0.35                       # Physical Layer RF signal
+      airtime_utilization: 0.25        # Channel saturation & congestion
+      packet_loss: 0.25                # Transport reliability
+      jitter: 0.15                     # Latency stability
+
+network_targets:
+  gateway_ip: "192.168.0.1"            # Local AP gateway
+  cpe_outdoor_ip: "192.168.150.1"      # WISP Outdoor antenna (LiteBeam/AirMax)
+  public_dns: "8.8.8.8"                # Google Anycast DNS
+  doh_primary: "https://1.1.1.1/dns-query"     # Cloudflare DNS over HTTPS
+  doh_secondary: "https://8.8.8.8/resolve"    # Google DNS over HTTPS
+  dns_timeout_sec: 2.0
+  dns_failure_threshold_sec: 5.0
+
+ssdp:
+  multicast_ip: "239.255.255.250"
+  multicast_port: 1900
+  query_interval_sec: 30
+  probe_ports: [7236, 7678, 80, 8080] # Miracast, UPnP media, HTTP
+
+usb_forensics:
+  poll_interval_sec: 1.0
+  target_hardware_vids: ["0BDA", "0bda"] # Realtek, etc.
+  failover_interface_name: "Wi-Fi 2"
+
+mlops:
+  model_dir: "models"
+  contamination: 0.05
+  anomaly_score_threshold: 0.65
+  preemptive_handover_health_threshold: 45.0
