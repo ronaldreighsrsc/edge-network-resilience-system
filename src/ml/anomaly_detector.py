@@ -139,7 +139,7 @@ class LinkAnomalyDetector:
         is_anomaly = normalized_anomaly >= self.anomaly_threshold
 
         action = "NO_ACTION"
-        if health_score < self.preemptive_threshold:
+        if health_score <= self.preemptive_threshold:
             action = "TRIGGER_PREEMPTIVE_HANDOVER"
         elif is_anomaly:
             action = "AUDIT_CHANNEL_CONGESTION"
@@ -157,7 +157,9 @@ class LinkAnomalyDetector:
         """Heuristic evaluation when un-fitted."""
         penalty = 0.0
         # RSSI degradation
-        if factors["rssi_dbm"] < -75:
+        if factors["rssi_dbm"] < -85:
+            penalty += 45.0
+        elif factors["rssi_dbm"] < -75:
             penalty += 30.0
         elif factors["rssi_dbm"] < -65:
             penalty += 15.0
@@ -179,7 +181,11 @@ class LinkAnomalyDetector:
         anomaly_score = float(np.clip(penalty / 100.0, 0.0, 1.0))
         is_anomaly = anomaly_score >= self.anomaly_threshold
 
-        action = "TRIGGER_PREEMPTIVE_HANDOVER" if health_score < self.preemptive_threshold else "NO_ACTION"
+        action = "NO_ACTION"
+        if health_score <= self.preemptive_threshold:
+            action = "TRIGGER_PREEMPTIVE_HANDOVER"
+        elif is_anomaly:
+            action = "AUDIT_CHANNEL_CONGESTION"
 
         return AnomalyReport(
             is_anomaly=is_anomaly,
