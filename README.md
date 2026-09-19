@@ -231,22 +231,6 @@ Accede a [http://localhost:8501](http://localhost:8501) para explorar:
 
 ---
 
-## 📄 Ficha Técnica Oficial para Currículum Vitae
-
-```markdown
-### Sistema Autónomo de Telemetría IoT, Roaming y Resiliencia de Redes en el Edge
-*Stack: Python 3.11/3.12, WlanAPI/Win32, SQLite (WAL), Pytest, MLflow/MLOps, FastAPI, Streamlit, Docker, GitHub Actions*
-
-* Diseñé e implementé una plataforma edge en Python para telemetría continua y autocuración de conectividad en entornos industriales y rurales, mitigando el "Sticky Client Problem" mediante roaming programático.
-* Desarrollé un algoritmo de optimización multicriterio (MCDA) con histéresis temporal anti-flapping (+15% sostenido en 3 ciclos) y fase de warm-up (4s), evaluando RSSI, Airtime Utilization (CSMA/CA), Jitter y Packet Loss a nivel de sockets TCP/UDP.
-* Integré un motor de descubrimiento pasivo/activo SSDP/UPnP Multicast (UDP 1900) para resolución de sesiones fantasma en dispositivos IoT y un watchdog de autocuración DNS con failover en caliente hacia DoH (DNS over HTTPS Cloudflare/Google).
-* Implementé un monitor forense de eventos de kernel USB (UserPnpCtx Event Tracing IDs 2003/2004/2006) para conmutación inmediata de interfaces ante caídas intermitentes de alimentación en hardware de red.
-* Entrené un modelo de Isolation Forest sobre más de 8.600 observaciones físicas reales recolectadas en terreno (Valle de Azapa), calculando un Health Score en tiempo real (0-100) con tracking MLOps.
-* Construí una API RESTful con FastAPI y un dashboard interactivo en Streamlit, respaldados por suite de 49 pruebas en Pytest (cobertura 88%) y pipeline de CI/CD automatizado en GitHub Actions.
-```
-
----
-
 ## 📜 Licencia
 Distribuido bajo la Licencia MIT. Consulta `LICENSE` para más detalles.
-Desarrollado por Ronald Reigh.
+Desarrollado por Ronald Solares.
