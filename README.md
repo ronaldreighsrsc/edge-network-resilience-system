@@ -231,8 +231,8 @@ Accede a [http://localhost:8501](http://localhost:8501) para explorar:
 
 ---
 
-## 📜 Licencia & Portafolio Institucional
+## 📜 Licencia
 Distribuido bajo la Licencia MIT. Consulta [LICENSE](LICENSE) para más detalles.  
-**Desarrollado por Ronald Solares** (Ingeniero Civil Industrial — Data, MLOps & Distributed Systems).  
-Forma parte del marco transversal de ingeniería de misión crítica (**Los 4 Pilares**) junto con [Fraud Detection System (Bci)](https://github.com/ronaldreighsrsc/fraud-detection-system), [AlphaEdge Quant Bot](https://github.com/ronaldreighsrsc/quant-trading-bot) y [CAEX Predictive Maintenance](https://github.com/ronaldreighsrsc/predictive-maintenance-system).
+**Desarrollado por Ronald Solares** (Ingeniero Civil Industrial — Data, MLOps & Distributed Systems).
+
 
