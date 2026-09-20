@@ -64,6 +64,17 @@ A diferencia de proyectos académicos que utilizan datasets sintéticos o limpio
 2. **Saturación Espectral:** Ráfagas de descarga masiva elevando el *Airtime Utilization* al 95%.
 3. **Corte Forzado de Hardware:** Desconexión controlada del adaptador USB para registrar el evento de desconexión en el kernel.
 
+### 🧠 MLOps: Resolución del "Cold Start Problem" (Arranque en Frío)
+
+En proyectos de Machine Learning e IoT industrial en el Edge surge un dilema arquitectónico clave:
+
+> [!NOTE]
+> **El Dilema del "Cold Start" en Terreno:**
+> * **La Condición Inicial:** Al encender el Daemon por primera vez en faena, la conexión suele encontrarse en un estado nominal y saludable (ej: $-58\text{ dBm}$, $0\%\text{ packet loss}$). Si el daemon solo recolectara telemetría durante unos minutos o días tranquilos, el modelo no supervisado (`IsolationForest`) solo conocería datos de normalidad absoluta.
+> * **La Vulnerabilidad:** Sin haber observado variaciones extremas (un operador caminando al fondo del galpón a $-93\text{ dBm}$, la atenuación de la camanchaca desértica a las 4 AM, o la saturación de canal al $95\%$), el modelo **carece de fronteras de decisión** para calificar qué constituye una degradación crítica o un *Sticky Client*.
+> * **La Solución de Arquitectura:** `data/generate_azapa_dataset.py` opera como un **Gemelo Digital y Simulador Calibrado con Ground Truth**. Proyecta una serie temporal de 72 horas ($8.640$ observaciones continuas) inyectando anomalías etiquetadas de la auditoría técnica real de Azapa para **entrenar y versionar el modelo base (`models/anomaly_detector.joblib`) antes del encendido del daemon**.
+> * **El Beneficio Operacional:** Cuando el Centinela (`--mode daemon`) inicia su vigilancia en vivo sobre la tarjeta física, **el modelo ya dispone de un criterio de juicio calibrado desde el segundo 1**, capaz de calcular el *Link Health Score* (0 a 100) y detonar conmutaciones preventivas ante el menor indicio de falla.
+
 ---
 
 ## 🏛️ Arquitectura del Sistema y Principios SOLID
