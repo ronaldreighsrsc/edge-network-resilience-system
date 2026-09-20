@@ -185,10 +185,27 @@ pytest
 TOTAL COVERAGE: 88% (Required: >= 85%)
 ```
 
-### 3. Generar el Dataset Real de Azapa (>8.600 Registros)
+### 3. Generar el Dataset y Calibrar el Modelo (Cold Start MLOps)
 ```powershell
 python data/generate_azapa_dataset.py
 ```
+*Genera las 8.640 observaciones de referencia de Azapa (72 horas) y entrena el modelo de Machine Learning (`IsolationForest`), dejándolo listo para inferencia en tiempo real.*
+
+---
+
+## 🛡️ Modo Producción: Daemon Autónomo en Terreno (En Vivo)
+
+Para iniciar la vigilancia continua de resiliencia y autocuración en tiempo real sobre tu tarjeta Wi-Fi física, Gateway y antena CPE exterior:
+```powershell
+python scripts/run_sentinel.py --mode daemon
+```
+* **Operación del Daemon en cada ciclo (cada 5s):**
+  * **Sonda L1/L2 (RF):** Interroga el adaptador Wi-Fi (`netsh wlan`) leyendo RSSI real, BSSID, canal, airtime load y APs candidatos.
+  * **Sonda L3/L4 (Transporte):** Mide RTT y Jitter hacia el Gateway local (192.168.0.1), antena CPE exterior (192.168.150.1) y DNS público.
+  * **Inferencia ML en Vivo:** Calcula el *Link Health Score* (0 a 100) en tiempo real con el `IsolationForest`.
+  * **Motor MCDA Anti-Flapping:** Evalúa candidatos con TOPSIS e histéresis de 3 ciclos para mitigar el *Sticky Client*.
+  * **Autocuración DNS & Hardware:** Activa DoH ante fallas del ISP y conmuta interfaces ante micro-cortes USB.
+  * **Persistencia Edge:** Inserta cada observación viva directamente en `data/telemetry.db` en modo SQLite WAL.
 
 ---
 

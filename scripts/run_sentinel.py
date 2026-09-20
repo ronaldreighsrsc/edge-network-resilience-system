@@ -25,7 +25,13 @@ from src.storage.sqlite_repository import SQLiteTelemetryRepository
 
 
 def run_daemon():
-    print("Starting OmniEdge Sentinel Autonomous Daemon...")
+    import logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+    print("Starting OmniEdge Sentinel Autonomous Daemon (Real Field Telemetry)...")
     repo = SQLiteTelemetryRepository()
     orchestrator = ResilienceOrchestrator(repository=repo)
     try:
