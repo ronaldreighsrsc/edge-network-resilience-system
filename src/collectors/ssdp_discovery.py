@@ -6,7 +6,7 @@ import asyncio
 import logging
 import re
 import socket
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 from urllib.parse import urlparse
 
@@ -129,7 +129,7 @@ class SSDPDiscoveryCollector(BaseCollector):
             model_name=headers.get("OPT"),
             open_ports=[],
             is_ghost_session=False,
-            last_seen=datetime.utcnow(),
+            last_seen=datetime.now(timezone.utc),
         )
 
     async def _audit_ghost_session(self, device: IoTDevice) -> None:
@@ -166,7 +166,7 @@ class SSDPDiscoveryCollector(BaseCollector):
                 model_name="Miracast 4K Industrial",
                 open_ports=[7236, 80],
                 is_ghost_session=False,
-                last_seen=datetime.utcnow(),
+                last_seen=datetime.now(timezone.utc),
             ),
             IoTDevice(
                 ip_address="192.168.0.88",
@@ -179,6 +179,6 @@ class SSDPDiscoveryCollector(BaseCollector):
                 model_name="ZD420-Series",
                 open_ports=[],
                 is_ghost_session=True,  # Disconnected socket / ghost session
-                last_seen=datetime.utcnow(),
+                last_seen=datetime.now(timezone.utc),
             ),
         ]

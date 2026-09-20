@@ -15,7 +15,7 @@ from __future__ import annotations
 import math
 import random
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 # Ensure project root is in sys.path
@@ -48,7 +48,7 @@ def generate_azapa_dataset(
     np.random.seed(seed)
 
     repo = SQLiteTelemetryRepository(db_path=db_path)
-    start_time = datetime.utcnow() - timedelta(hours=72)
+    start_time = datetime.now(timezone.utc) - timedelta(hours=72)
 
     print(f"Generating {total_samples} Azapa field observations into {db_path}...")
 
@@ -241,7 +241,7 @@ def generate_azapa_dataset(
             model_name="Industrial Miracast 4K",
             open_ports=[7236, 80],
             is_ghost_session=False,
-            last_seen=datetime.utcnow(),
+            last_seen=datetime.now(timezone.utc),
         )
     )
     repo.save_iot_device(
@@ -256,7 +256,7 @@ def generate_azapa_dataset(
             model_name="ZD420-Series",
             open_ports=[],
             is_ghost_session=True,
-            last_seen=datetime.utcnow(),
+            last_seen=datetime.now(timezone.utc),
         )
     )
 

@@ -7,7 +7,7 @@ import logging
 import platform
 import socket
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
 from src.core.interfaces import BaseCollector
@@ -103,7 +103,7 @@ class SocketProbeCollector(BaseCollector):
             packet_loss_pct=round(loss_pct, 1),
             tcp_handshake_ms=round(tcp_handshake_ms, 2) if tcp_handshake_ms else None,
             is_reachable=is_reachable,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
         )
 
     async def _ping_sample(self, ip: str) -> Optional[float]:
@@ -143,7 +143,7 @@ class SocketProbeCollector(BaseCollector):
                 packet_loss_pct=0.0,
                 tcp_handshake_ms=3.1,
                 is_reachable=True,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
             ),
             SocketProbeMetrics(
                 target_name="cpe_outdoor",
@@ -153,7 +153,7 @@ class SocketProbeCollector(BaseCollector):
                 packet_loss_pct=0.0,
                 tcp_handshake_ms=6.2,
                 is_reachable=True,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
             ),
             SocketProbeMetrics(
                 target_name="public_dns",
@@ -164,6 +164,6 @@ class SocketProbeCollector(BaseCollector):
                 tcp_handshake_ms=34.0,
                 dns_resolution_ms=12.0,
                 is_reachable=True,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
             ),
         ]

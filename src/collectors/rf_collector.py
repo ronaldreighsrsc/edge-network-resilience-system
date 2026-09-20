@@ -8,7 +8,7 @@ import platform
 import re
 import shutil
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 
 from src.core.interfaces import BaseCollector
@@ -73,7 +73,7 @@ class RFTelemetryCollector(BaseCollector):
             tx_rate_mbps=144.4,
             airtime_utilization_pct=34.0,
             connected_stations=11,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
         )
 
         candidates = [
@@ -144,7 +144,7 @@ class RFTelemetryCollector(BaseCollector):
             tx_rate_mbps=float(active_info.get("tx_rate", 144.0)),
             airtime_utilization_pct=float(active_info.get("airtime", 25.0)),
             connected_stations=active_info.get("stations", 5),
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
         )
 
         return active_rf, candidates

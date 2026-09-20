@@ -6,7 +6,7 @@ import asyncio
 import logging
 import platform
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
 from src.core.interfaces import BaseCollector
@@ -28,7 +28,7 @@ class USBSentinelCollector(BaseCollector):
         self.failover_interface = failover_interface
         self.mock_mode = mock_mode
         self._is_windows = platform.system() == "Windows"
-        self._last_event_time = datetime.utcnow()
+        self._last_event_time = datetime.now(timezone.utc)
 
     @property
     def name(self) -> str:
@@ -115,7 +115,7 @@ class USBSentinelCollector(BaseCollector):
             product_id=pid,
             serial_number=serial,
             device_description="Realtek RTL8852BE-VS WiFi 6 PCIe/USB Adapter",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
             raw_payload={"message": msg},
         )
 
@@ -131,7 +131,7 @@ class USBSentinelCollector(BaseCollector):
                 product_id="B852",
                 serial_number="RTK-AZAPA-01",
                 device_description="Realtek RTL8852BE-VS 802.11ax Adapter",
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 raw_payload={"status": "device_operational_nominal"},
             )
         ]
@@ -147,7 +147,7 @@ class USBSentinelCollector(BaseCollector):
             product_id="B852",
             serial_number="RTK-AZAPA-01",
             device_description="Realtek RTL8852BE-VS 802.11ax Adapter (Voltage Drop / Brownout)",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
             raw_payload={"status": "surprise_removal_brownout_detected"},
         )
         logger.warning(f"Simulated USB Brownout disconnect: {event.device_id}")

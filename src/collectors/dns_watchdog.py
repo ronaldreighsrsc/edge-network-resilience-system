@@ -6,7 +6,7 @@ import asyncio
 import logging
 import socket
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 import httpx
 
@@ -54,7 +54,7 @@ class DNSWatchdogCollector(BaseCollector):
                 "avg_resolution_ms": 14.2,
                 "failure_count": 0,
                 "provider": "DoH-Cloudflare" if self._doh_active else "System-ISP",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
         domain = self.test_domains[0]
@@ -81,7 +81,7 @@ class DNSWatchdogCollector(BaseCollector):
                     "resolved_ip": doh_ip,
                     "failure_count": self._failure_count,
                     "provider": "DoH-Cloudflare",
-                    "timestamp": datetime.utcnow().isoformat(),
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
                 }
         else:
             if self._failure_count > 0:
@@ -96,7 +96,7 @@ class DNSWatchdogCollector(BaseCollector):
                 "resolved_ip": resolved_ip,
                 "failure_count": 0,
                 "provider": "System-ISP",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
     async def _resolve_standard(self, hostname: str) -> Tuple[float, bool, Optional[str]]:

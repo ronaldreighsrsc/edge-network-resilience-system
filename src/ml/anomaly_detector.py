@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -150,7 +150,7 @@ class LinkAnomalyDetector:
             health_score=health_score,
             contributing_factors=factors,
             recommended_action=action,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
         )
 
     def _heuristic_evaluate(self, factors: Dict[str, float]) -> AnomalyReport:
@@ -193,7 +193,7 @@ class LinkAnomalyDetector:
             health_score=health_score,
             contributing_factors=factors,
             recommended_action=action,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
         )
 
     def save(self, path: Optional[str] = None) -> None:

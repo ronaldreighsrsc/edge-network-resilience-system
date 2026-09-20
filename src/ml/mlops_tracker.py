@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -35,9 +35,10 @@ class MLOpsTracker:
         notes: str = "",
     ) -> Dict[str, Any]:
         """Logs an MLOps experiment run with parameters, metrics, and artifact references."""
+        now = datetime.now(timezone.utc)
         run_record = {
-            "run_id": f"run_{int(datetime.utcnow().timestamp())}",
-            "timestamp": datetime.utcnow().isoformat(),
+            "run_id": f"run_{int(now.timestamp())}",
+            "timestamp": now.isoformat(),
             "experiment_name": experiment_name,
             "model_version": model_version,
             "params": params,

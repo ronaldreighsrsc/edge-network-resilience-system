@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -29,7 +34,7 @@ class RFMetrics(BaseModel):
     tx_rate_mbps: float = Field(default=0.0, ge=0.0, description="Negotiated Tx link rate in Mbps")
     airtime_utilization_pct: float = Field(default=0.0, ge=0.0, le=100.0, description="CSMA/CA Channel airtime load")
     connected_stations: int = Field(default=0, ge=0, description="Number of BSS stations associated")
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
 
 
 class APCandidate(BaseModel):
@@ -55,7 +60,7 @@ class SocketProbeMetrics(BaseModel):
     tcp_handshake_ms: Optional[float] = Field(default=None, description="TCP 3-Way Handshake establishment latency")
     dns_resolution_ms: Optional[float] = Field(default=None, description="DNS lookup time in ms")
     is_reachable: bool = True
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
 
 
 class NetworkMetrics(BaseModel):
@@ -65,7 +70,7 @@ class NetworkMetrics(BaseModel):
     active_interface: str = "Wi-Fi"
     public_ip: Optional[str] = None
     is_online: bool = True
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
 
 
 class IoTDevice(BaseModel):
@@ -80,7 +85,7 @@ class IoTDevice(BaseModel):
     model_name: Optional[str] = None
     open_ports: List[int] = Field(default_factory=list)
     is_ghost_session: bool = False
-    last_seen: datetime = Field(default_factory=datetime.utcnow)
+    last_seen: datetime = Field(default_factory=utc_now)
 
 
 class KernelEvent(BaseModel):
@@ -93,7 +98,7 @@ class KernelEvent(BaseModel):
     product_id: Optional[str] = None
     serial_number: Optional[str] = None
     device_description: Optional[str] = None
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
     raw_payload: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -104,7 +109,7 @@ class AnomalyReport(BaseModel):
     health_score: float = Field(default=100.0, ge=0.0, le=100.0, description="Overall Link Health 0-100")
     contributing_factors: Dict[str, float] = Field(default_factory=dict)
     recommended_action: str = "NO_ACTION"
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
 
 
 class HandoverDecision(BaseModel):
@@ -120,4 +125,4 @@ class HandoverDecision(BaseModel):
     in_deadband: bool = False
     in_warmup: bool = False
     reason: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)

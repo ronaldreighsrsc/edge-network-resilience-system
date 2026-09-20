@@ -9,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from src.core.events import InMemoryEventBus
 from src.core.models import APCandidate, RFMetrics, SocketProbeMetrics
@@ -72,7 +72,7 @@ def sample_rf_metrics() -> RFMetrics:
         tx_rate_mbps=144.4,
         airtime_utilization_pct=34.0,
         connected_stations=11,
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
     )
 
 
