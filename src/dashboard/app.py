@@ -91,7 +91,7 @@ st.sidebar.title("OmniEdge Sentinel")
 st.sidebar.markdown("**Sistema Autónomo de Resiliencia en el Edge**")
 st.sidebar.caption("Valle de Azapa (Arica, Chile) | Edge Daemon")
 
-refresh_btn = st.sidebar.button("🔄 Actualizar Telemetría", use_container_width=True)
+refresh_btn = st.sidebar.button("🔄 Actualizar Telemetría", width="stretch")
 st.sidebar.divider()
 st.sidebar.markdown("### Parámetros de Autocuración")
 deadband_val = st.sidebar.slider("Zona de Indiferencia (Deadband %)", 5, 30, 15)
@@ -216,7 +216,7 @@ with tab1:
             }
             for c in candidates
         ])
-        st.dataframe(cand_df, use_container_width=True, hide_index=True)
+        st.dataframe(cand_df, width="stretch", hide_index=True)
 
         if st.button("🚀 Forzar Conmutación (Handover a Telyexpress_Pablo)"):
             st.success("Orden de Handover ejecutada con éxito. Búfer de Warm-up activado (4.0s).")
@@ -228,7 +228,7 @@ with tab1:
             "Ponderación": ["35%", "25%", "25%", "15%"],
             "Impacto Industrial": ["Atenuación por muros/distancia", "Congestión espectral por vecinos", "Calidad en switches/antena", "Fluctuación en microondas"],
         })
-        st.dataframe(weights_df, use_container_width=True, hide_index=True)
+        st.dataframe(weights_df, width="stretch", hide_index=True)
 
         st.info(
             "🔒 **Histéresis Anti-Flapping:** Para autorizar un cambio de AP, el candidato debe superar "
@@ -276,7 +276,7 @@ with tab3:
     with mc2:
         st.markdown("#### Historial de Experimentos y Versiones")
         if runs:
-            st.dataframe(pd.DataFrame(runs), use_container_width=True)
+            st.dataframe(pd.DataFrame(runs), width="stretch")
         else:
             st.text("No se han registrado corridas previas.")
 
@@ -297,7 +297,7 @@ with tab4:
             }
             for d in iot_devices
         ])
-        st.dataframe(iot_df, use_container_width=True, hide_index=True)
+        st.dataframe(iot_df, width="stretch", hide_index=True)
     else:
         st.info("Sin dispositivos IoT registrados.")
 
@@ -314,6 +314,6 @@ with tab4:
             }
             for k in kernel_events
         ])
-        st.dataframe(k_df, use_container_width=True, hide_index=True)
+        st.dataframe(k_df, width="stretch", hide_index=True)
     else:
         st.info("No se han registrado eventos de desconexión por brownout.")
